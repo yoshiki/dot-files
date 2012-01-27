@@ -12,7 +12,6 @@ alias psgrep 'ps auxww | grep "\!:1"'
 alias dupth 'du -d \!:1 \!:2*'
 alias screen 'screen -U'
 alias ec 'emacsclient -n \!'
-alias less 'less -XN'
 
 ## Standard aliases - security
 # "-i" asks for confirmation when deleting. This is good.
@@ -36,9 +35,9 @@ alias ls 	'ls -F'
 # fileutils package and it is annoying if the alias exists without the app.
 if ( -e /usr/bin/jless || -e /usr/local/bin/jless ) then
 	alias more 	'jless'
-	alias less	'jless -N'
+	alias less	'jless -XN'
 else
-	alias less	'less -N'
+	alias less	'less -XN'
 endif
 
 # To be used as in "cp /etc/inetd.conf /etc/inetd.conf.`today`"
