@@ -1,0 +1,28 @@
+escape ^Ta
+vbell on
+autodetach on
+startup_message off
+defscrollback 10000
+#defencoding utf8
+#encoding utf8 utf8
+
+# keybindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+#bind ^h
+#bind h
+bind 'K' kill
+#bind 'I' login on
+#bind 'O' login off
+bind '}' history
+bind ^] paste [.]
+bind 'R' title ${HOST}
+bind ^U encoding utf8 utf8
+bind ^E encoding eucjp utf8
+bind ^W encoding sjis utf8
+
+# hardstatus alwaysignore
+hardstatus alwayslastline "%-w%{=ub bw}%n %t%{-}%+w"

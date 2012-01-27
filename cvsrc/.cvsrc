@@ -1,0 +1,5 @@
+cvs -q
+diff -u
+update -dP
+checkout -P
+
