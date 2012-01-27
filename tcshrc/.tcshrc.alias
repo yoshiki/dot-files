@@ -12,6 +12,7 @@ alias psgrep 'ps auxww | grep "\!:1"'
 alias dupth 'du -d \!:1 \!:2*'
 alias screen 'screen -U'
 alias ec 'emacsclient -n \!'
+alias less 'less -XN'
 
 ## Standard aliases - security
 # "-i" asks for confirmation when deleting. This is good.
