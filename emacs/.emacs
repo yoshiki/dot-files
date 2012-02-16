@@ -93,7 +93,7 @@
 
 ;; auto-complete
 (require 'auto-complete)
-;(global-auto-complete-mode t)
+(global-auto-complete-mode t)
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
 (define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
@@ -300,9 +300,6 @@ buffer that is not the current buffer."
 ;; package
 (load "package")
 (package-initialize)
-
-;; jka-compr
-;(load "jka-compr")
 
 ;; java
 (add-to-list 'auto-mode-alist '("\\.java$" . java-mode))
