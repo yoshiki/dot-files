@@ -16,7 +16,7 @@ else
 	setenv LESSCHARSET UTF-8
 endif
 #stty erase ^H
-setenv PAGER less
+setenv PAGER 'less -X'
 setenv GREP_COLOR "01;34"
 setenv GREP_OPTIONS "--color=auto"
 

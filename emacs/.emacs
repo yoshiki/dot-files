@@ -159,8 +159,27 @@
 ;; html-helper-mode
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 (add-to-list 'auto-mode-alist '("\\.\\(xhtml\\|html\\|tt\\|inc\\)$" . html-helper-mode))
-(setq html-helper-new-buffer-template nil)
-(setq html-helper-basic-offset 8)
+(setq html-helper-basic-offset 4)
+(setq html-helper-never-indent t)
+(setq html-helper-verbose nil)
+
+(require 'sgml-mode)
+(add-hook 'html-helper-mode-hook
+          '(lambda ()
+             (set (make-local-variable 'indent-line-function)
+                  'sgml-indent-line)
+             (define-key html-helper-mode-map (kbd "TAB") 'indent-for-tab-command)))
+
+(setq html-helper-new-buffer-template
+      '("<!DOCTYPE html>\n"
+        "<html>\n\n"
+        "<head>\n"
+        "  <meta charset=\"utf-8\">\n"
+        "  <title>" p "</title>\n"
+        "</head>\n\n"
+        "<body>\n  " p "\n"
+        "</body>\n\n"
+        "</html>\n"))
 
 ;; html-tt
 (require 'html-tt)
@@ -301,3 +320,10 @@ buffer that is not the current buffer."
 (add-hook 'java-mode-hook
           (lambda ()
             (local-set-key "\C-c\C-k" 'ant-compile)))
+
+;; markdown-mode
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
+(setq auto-mode-alist
+      (cons '("\\.\\(md\\|mdwn\\|mdt\\|markdown\\)" . markdown-mode)
+            auto-mode-alist))
