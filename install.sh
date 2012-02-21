@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -n "Now copying file..."
+echo "Now copying file..."
 
 PWD=`pwd`
 ln -sf $PWD/tcshrc/.tcshrc ~/
@@ -21,6 +21,8 @@ ln -sf $PWD/skk/.skk ~/
 ln -sf $PWD/terminfo ~/.terminfo
 
 ln -sf $PWD/keysnail/.keysnail.js ~/.keysnail.js
+
+ln -sf $PWD/tmux/.tmux.conf ~/.tmux.conf
 
 echo done
 
