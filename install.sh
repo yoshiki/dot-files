@@ -3,6 +3,8 @@
 echo "Now copying file..."
 
 PWD=`pwd`
+ln -sf $PWD/zshrc/.zshrc ~/
+
 ln -sf $PWD/tcshrc/.tcshrc ~/
 ln -sf $PWD/tcshrc/.tcshrc.alias ~/
 ln -sf $PWD/tcshrc/.tcshrc.complete ~/
