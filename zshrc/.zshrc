@@ -14,6 +14,12 @@ else
     alias ls='ls -F --color=auto'
 fi
 
+# Set word range selection
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " _-./;@"
+zstyle ':zle:*' word-style unspecified
+
 cdpath=(.. ~)
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 typeset -U path cdpath fpath manpath
@@ -25,7 +31,12 @@ hosts=(`hostname`)
 PROMPT='%S%m:[%.]%s%% '
 RPROMPT=' %~'     # prompt for right side of screen
 
-HISTSIZE=200
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt extended_history
+setopt share_history
+
 DIRSTACKSIZE=20
 
 # Set/unset  shell options
