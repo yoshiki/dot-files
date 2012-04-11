@@ -39,18 +39,10 @@ setopt share_history
 
 DIRSTACKSIZE=20
 
-# Set/unset  shell options
-#setopt   notify globdots correct pushdtohome cdablevars autolist
-#setopt   correctall autocd recexact longlistjobs
-#setopt   autoresume histignoredups pushdsilent noclobber
-#setopt   autopushd pushdminus extendedglob rcquotes mailwarning
-#unsetopt bgnice autoparamslash
-
-# Setup new style completion system. To see examples of the old style (compctl
-# based) programmable completion, check Misc/compctl-examples in the zsh
-# distribution.
 autoload -U compinit
 compinit
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 
 if [ -f $HOME/.zshrc.local ]; then
     source $HOME/.zshrc.local
