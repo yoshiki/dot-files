@@ -20,11 +20,13 @@ ln -sf $PWD/screenrc/.screenrc ~/
 
 ln -sf $PWD/skk/.skk ~/
 
-ln -sf $PWD/terminfo ~/.terminfo
+ln -sf $PWD/termcap/.termcap ~/.termcap
 
 ln -sf $PWD/keysnail/.keysnail.js ~/.keysnail.js
 
 ln -sf $PWD/tmux/.tmux.conf ~/.tmux.conf
+
+tic $PWD/terminfo/xterm-color.ti
 
 echo done
 

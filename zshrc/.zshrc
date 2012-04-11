@@ -1,6 +1,18 @@
 umask 022
 
-alias ls='ls -F --color=auto'
+alias psgrep='ps auxww | grep "\!:1"'
+alias dupth='du -d \!:1 \!:2*'
+alias screen='screen -U'
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias less='less -XN'
+
+if [ `uname` = 'Darwin' ]; then
+    alias ls='ls -FG'
+else
+    alias ls='ls -F --color=auto'
+fi
 
 cdpath=(.. ~)
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
