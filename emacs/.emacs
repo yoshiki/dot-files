@@ -226,7 +226,7 @@ use warnings;
 1;")
          (("\\.\\(pl\\|cgi\\)$" . "Perl Script")
           nil
-          "#!/usr/local/bin/perl
+          "#!/usr/bin/env perl
 
 use strict;
 use warnings;
