@@ -1,7 +1,14 @@
 umask 022
 
-alias psgrep='ps auxww | grep "\!:1"'
-alias dupth='du -d \!:1 \!:2*'
+function psgrep() {
+    ps auxww | head -n 1
+    ps auxww | grep $* | grep -v ps | grep -v grep
+}
+
+function dupth() {
+    du -h -d $*
+}
+
 alias screen='screen -U'
 alias rm='rm -i'
 alias cp='cp -i'
@@ -17,7 +24,7 @@ fi
 # Set word range selection
 autoload -Uz select-word-style
 select-word-style default
-zstyle ':zle:*' word-chars " _-./;@"
+zstyle ':zle:*' word-chars " _-./;@:()[]{}"
 zstyle ':zle:*' word-style unspecified
 
 cdpath=(.. ~)
