@@ -1,11 +1,11 @@
 ;;; yaml-mode.el --- Major mode for editing YAML files
 
-;; Copyright (C) 2006  Yoshiki Kurihara
+;; Copyright (C) 2010-2013 Yoshiki Kurihara
 
-;; Author: Yoshiki Kurihara <kurihara@cpan.org>
+;; Author: Yoshiki Kurihara <clouder@gmail.com>
 ;;         Marshall T. Vandegrift <llasram@gmail.com>
 ;; Keywords: data yaml
-;; Version: 0.0.5
+;; Version: 0.0.9
 
 ;; This file is not part of Emacs
 
@@ -63,6 +63,7 @@
 
 ;; User definable variables
 
+;;;###autoload
 (defgroup yaml nil
   "Support for the YAML serialization format"
   :group 'languages
@@ -79,7 +80,8 @@
   :group 'yaml)
 
 (defcustom yaml-backspace-function 'backward-delete-char-untabify
-  "*Function called by `yaml-electric-backspace' when deleting backwards."
+  "*Function called by `yaml-electric-backspace' when deleting backwards.
+It will receive one argument, the numeric prefix value."
   :type 'function
   :group 'yaml)
 
@@ -105,7 +107,7 @@ that key is pressed to begin a block literal."
   :group 'yaml)
 
 (defcustom yaml-imenu-generic-expression
-  '((nil "^\\(:?[a-zA-Z_-]+\\):" 1))
+  '((nil  "^\\(:?[a-zA-Z_-]+\\):"          1))
   "The imenu regex to parse an outline of the yaml file."
   :type 'string
   :group 'yaml)
@@ -113,7 +115,7 @@ that key is pressed to begin a block literal."
 
 ;; Constants
 
-(defconst yaml-mode-version "0.0.5" "Version of `yaml-mode.'")
+(defconst yaml-mode-version "0.0.9" "Version of `yaml-mode'.")
 
 (defconst yaml-blank-line-re "^ *$"
   "Regexp matching a line containing only (valid) whitespace.")
@@ -127,7 +129,7 @@ that key is pressed to begin a block literal."
 (defconst yaml-document-delimiter-re "^ *\\(?:---\\|[.][.][.]\\)"
   "Rexexp matching a YAML document delimiter line.")
 
-(defconst yaml-node-anchor-alias-re "[&*]\\w+"
+(defconst yaml-node-anchor-alias-re "[&*][a-zA-Z0-9_-]+"
   "Regexp matching a YAML node anchor or alias.")
 
 (defconst yaml-tag-re "!!?[^ \n]+"
@@ -160,12 +162,12 @@ that key is pressed to begin a block literal."
   (concat yaml-scalar-context-re
           "\\(?:" yaml-tag-re "\\)?"
           yaml-block-literal-base-re)
-  "Regexp matching a line beginning a YAML block literal")
+  "Regexp matching a line beginning a YAML block literal.")
 
 (defconst yaml-nested-sequence-re
   (concat "^\\(?: *- +\\)+"
           "\\(?:" yaml-bare-scalar-re " *:\\(?: +.*\\)?\\)?$")
-  "Regexp matching a line containing one or more nested YAML sequences")
+  "Regexp matching a line containing one or more nested YAML sequences.")
 
 (defconst yaml-constant-scalars-re
   (concat "\\(?:^\\|\\(?::\\|-\\|,\\|{\\|\\[\\) +\\) *"
@@ -178,7 +180,7 @@ that key is pressed to begin a block literal."
              "true" "True" "TRUE" "false" "False" "FALSE"
              "on" "On" "ON" "off" "Off" "OFF") t)
           " *$")
-  "Regexp matching certain scalar constants in scalar context")
+  "Regexp matching certain scalar constants in scalar context.")
 
 
 ;; Mode setup
@@ -196,7 +198,7 @@ that key is pressed to begin a block literal."
   (define-key yaml-mode-map "\C-j" 'newline-and-indent))
 
 (defvar yaml-mode-syntax-table nil
-  "Syntax table in use in yaml-mode buffers.")
+  "Syntax table in use in `yaml-mode' buffers.")
 (if yaml-mode-syntax-table
     nil
   (setq yaml-mode-syntax-table (make-syntax-table))
@@ -205,7 +207,7 @@ that key is pressed to begin a block literal."
   (modify-syntax-entry ?# "<" yaml-mode-syntax-table)
   (modify-syntax-entry ?\n ">" yaml-mode-syntax-table)
   (modify-syntax-entry ?\\ "\\" yaml-mode-syntax-table)
-  (modify-syntax-entry ?- "." yaml-mode-syntax-table)
+  (modify-syntax-entry ?- "w" yaml-mode-syntax-table)
   (modify-syntax-entry ?_ "_" yaml-mode-syntax-table)
   (modify-syntax-entry ?\( "." yaml-mode-syntax-table)
   (modify-syntax-entry ?\) "." yaml-mode-syntax-table)
@@ -214,6 +216,7 @@ that key is pressed to begin a block literal."
   (modify-syntax-entry ?\[ "(]" yaml-mode-syntax-table)
   (modify-syntax-entry ?\] ")[" yaml-mode-syntax-table))
 
+;;;###autoload
 (define-derived-mode yaml-mode fundamental-mode "YAML"
   "Simple mode to edit YAML.
 
@@ -221,6 +224,7 @@ that key is pressed to begin a block literal."
   (set (make-local-variable 'comment-start) "# ")
   (set (make-local-variable 'comment-start-skip) "#+ *")
   (set (make-local-variable 'indent-line-function) 'yaml-indent-line)
+  (set (make-local-variable 'indent-tabs-mode) nil)
   (set (make-local-variable 'font-lock-defaults)
        '(yaml-font-lock-keywords
          nil nil nil nil
@@ -264,22 +268,22 @@ artificially limitted to the value of
       (goto-char (point-at-bol))
       (while (and (looking-at yaml-blank-line-re) (not (bobp)))
         (forward-line -1))
-      (let ((nlines yaml-block-literal-search-lines) 
-            (min-level (current-indentation))) 
-      (forward-line -1) 
-      (while (and (/= nlines 0) 
-                  (/= min-level 0) 
-                  (not (looking-at yaml-block-literal-re)) 
-                  (not (bobp))) 
-        (set 'nlines (1- nlines)) 
-        (unless (looking-at yaml-blank-line-re) 
-          (set 'min-level (min min-level (current-indentation)))) 
-        (forward-line -1)) 
+      (let ((nlines yaml-block-literal-search-lines)
+            (min-level (current-indentation)))
+      (forward-line -1)
+      (while (and (/= nlines 0)
+                  (/= min-level 0)
+                  (not (looking-at yaml-block-literal-re))
+                  (not (bobp)))
+        (set 'nlines (1- nlines))
+        (unless (looking-at yaml-blank-line-re)
+          (set 'min-level (min min-level (current-indentation))))
+        (forward-line -1))
       (cond
        ((and (< (current-indentation) min-level)
              (looking-at yaml-block-literal-re))
           (goto-char end) (set-match-data (list begin end)) t)
-         ((progn 
+         ((progn
             (goto-char begin)
             (re-search-forward (concat yaml-block-literal-re
                                        " *\\(.*\\)\n")
@@ -355,7 +359,7 @@ immediately previous multiple of `yaml-indent-offset' spaces."
       (indent-to (* (/ (- ci (* arg yaml-indent-offset))
                        yaml-indent-offset)
                     yaml-indent-offset)))))
-  
+
 (defun yaml-electric-bar-and-angle (arg)
   "Insert the bound key and possibly begin a block literal.
 Inserts the bound key.  If inserting the bound key causes the current
@@ -365,7 +369,7 @@ and indents appropriately."
   (interactive "*P")
   (self-insert-command (prefix-numeric-value arg))
   (let ((extra-chars
-         (assoc last-command-char
+         (assoc last-command-event
                 yaml-block-literal-electric-alist)))
     (cond
      ((and extra-chars (not arg) (eolp)
@@ -402,6 +406,9 @@ margin."
   (interactive)
   (message "yaml-mode %s" yaml-mode-version)
   yaml-mode-version)
+
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 
 (provide 'yaml-mode)
 
