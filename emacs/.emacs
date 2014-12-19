@@ -19,30 +19,32 @@
 
 ;; initial visible setting
 (cond
- ;; cocoa emacs setting
- ((and
-   (string-match "apple-darwin" system-configuration)
-   (string-match "^23\." emacs-version))
-  (progn
+ ((or (eq window-system 'ns) (eq window-system 'mac))
+  (when (>= emacs-major-version 23)
+    (set-face-attribute 'default nil
+			:family "monaco"
+			:height 140)
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     'japanese-jisx0208
+     '("Hiragino Maru Gothic Pro" . "iso10646-1"))
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     'japanese-jisx0212
+     '("Hiragino Maru Gothic Pro" . "iso10646-1"))
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     'mule-unicode-0100-24ff
+     '("monaco" . "iso10646-1"))
+    (setq face-font-rescale-alist
+	  '(("^-apple-hiragino.*" . 1.2)
+	    (".*osaka-bold.*" . 1.2)
+	    (".*osaka-medium.*" . 1.2)
+	    (".*courier-bold-.*-mac-roman" . 1.0)
+	    (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+	    (".*monaco-bold-.*-mac-roman" . 0.9)
+	    ("-cdac$" . 1.3)))
     (tool-bar-mode -1)
-    (create-fontset-from-ascii-font "Menlo-14:weight=normal:slant=normal" nil "menlokakugo")
-    (set-fontset-font "fontset-menlokakugo"
-                      'unicode
-                      (font-spec :family "Hiragino Kaku Gothic ProN" :size 16)
-                      nil
-                      'append)
-    (add-to-list 'default-frame-alist '(font . "fontset-menlokakugo"))
-    ))
- ;; window-system setting
- (window-system
-  (progn
-    ;; linux setting
-    (if (string-match "^23\." emacs-version)
-        (progn
-          (set-frame-font "Courier 10 Pitch-9")
-          ))
-    (tool-bar-mode nil)
-    (setq inhibit-splash-screen t)
     (setq default-frame-alist
           (append
            '((width . 110))
@@ -50,11 +52,8 @@
            '((top . 0))
            '((left . -1))
            default-frame-alist))
-    (menu-bar-mode 1))
-  (progn
-    (setq inhibit-splash-screen t)
-    (menu-bar-mode -1))
-  ))
+    )))
+(setq inhibit-splash-screen t)
 
 ;; Recentf
 (recentf-mode t)
@@ -285,7 +284,7 @@ buffer that is not the current buffer."
 ;  )
 
 ;; for skk
-(require 'skk-autoloads)
+;(require 'skk-autoloads)
 (load-file "~/.skk")
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
@@ -298,7 +297,11 @@ buffer that is not the current buffer."
 (require 'emoji)
 
 ;; package
-(load "package")
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
 ;; java
@@ -324,14 +327,3 @@ buffer that is not the current buffer."
 (setq auto-mode-alist
       (cons '("\\.\\(md\\|mdwn\\|mdt\\|markdown\\)" . markdown-mode)
             auto-mode-alist))
-
-
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))

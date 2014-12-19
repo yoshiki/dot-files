@@ -2,7 +2,7 @@
 ;(setq skk-server-prog "/usr/local/sbin/skkserv /usr/local/share/skk/SKK-JISYO.L")
 (setq skk-server-jisyo "/usr/share/skk/SKK-JISYO.L")
 
-(setq skk-large-jisyo "/usr/share/skk/SKK-JISYO.L")
+(setq skk-large-jisyo "~/Library/Application Support/AquaSKK/SKK-JISYO.L")
 (setq skk-egg-like-newline t)
 (setq skk-use-jisx0201-input-method t);
 
