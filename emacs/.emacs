@@ -67,9 +67,6 @@
   "System to toggle region and rectangle." t nil)
 (sense-region-on)
 
-;; load local setting
-(cond ((file-readable-p "~/.emacs.local") (load-file "~/.emacs.local")))
-
 ;; set permission +x for #!
 (add-hook 'after-save-hook 'my-chmod-script)
 (defun my-chmod-script() (interactive) (save-restriction (widen)
@@ -327,3 +324,6 @@ buffer that is not the current buffer."
 (setq auto-mode-alist
       (cons '("\\.\\(md\\|mdwn\\|mdt\\|markdown\\)" . markdown-mode)
             auto-mode-alist))
+
+;; load local setting
+(cond ((file-readable-p "~/.emacs.local") (load-file "~/.emacs.local")))
