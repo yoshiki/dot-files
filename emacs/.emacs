@@ -291,7 +291,7 @@ buffer that is not the current buffer."
 (autoload 'navi2ch "navi2ch" "Navigator for 2ch for Emacs" t)
 
 ;; emoji
-(require 'emoji)
+;(require 'emoji)
 
 ;; package
 (require 'package)
