@@ -23,7 +23,7 @@ fi
 
 # Set word range selection
 autoload -Uz select-word-style
-select-word-style default
+select-word-style bash
 zstyle ':zle:*' word-chars " _-./;@:()[]{}"
 zstyle ':zle:*' word-style unspecified
 
