@@ -26,6 +26,8 @@ ln -sf $PWD/termcap/.termcap ~/.termcap
 
 ln -sf $PWD/tmux/.tmux.conf ~/.tmux.conf
 
+ln -sf $PWD/vimrc/.vimrc ~/.vimrc
+
 tic $PWD/terminfo/xterm-color.ti
 
 echo done
