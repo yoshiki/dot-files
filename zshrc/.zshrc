@@ -44,11 +44,11 @@ precmd() { vcs_info }
 
 ARCH=`uname -m`
 if [[ $ARCH == 'arm64' ]]; then
-    PROMPT='%S%m:a:[%.]%s%% '
+    PROMPT='%S%m:[%.]%s%% '
     RPROMPT='${vcs_info_msg_0_} %F{blue}[arm64]%f'
     export PATH=/opt/homebrew/bin:$PATH
 else
-    PROMPT='%S%m:x:[%.]%s%% '
+    PROMPT='%S%m:[%.]%s%% '
     RPROMPT='${vcs_info_msg_0_} %F{blue}[x86_64]%f'
 fi
 
