@@ -35,8 +35,22 @@ typeset -U path cdpath fpath manpath
 hosts=(`hostname`)
 
 # Set prompts
-PROMPT='%S%m:[%.]%s%% '
-RPROMPT=' %~'     # prompt for right side of screen
+autoload -Uz vcs_info
+setopt prompt_subst
+
+zstyle ':vcs_info:*' formats '%s(%F{green}%b%f)'
+zstyle ':vcs_info:*' actionformats '%s(%F{green}%b%f(%F{red}%a%f)'
+precmd() { vcs_info }
+
+ARCH=`uname -m`
+if [[ $ARCH == 'arm64' ]]; then
+    PROMPT='%S%m:a:[%.]%s%% '
+    RPROMPT='${vcs_info_msg_0_} %F{blue}[arm64]%f'
+    export PATH=/opt/homebrew/bin:$PATH
+else
+    PROMPT='%S%m:x:[%.]%s%% '
+    RPROMPT='${vcs_info_msg_0_} %F{blue}[x86_64]%f'
+fi
 
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
