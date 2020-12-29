@@ -60,11 +60,18 @@ setopt share_history
 
 DIRSTACKSIZE=20
 
-if [ -e /usr/local/share/zsh-completions ]; then
-    fpath=(/usr/local/share/zsh-completions $fpath)
-fi
+if type brew &>/dev/null; then
+    if [ -e $(brew --prefix)/share/zsh-completions ]; then
+        fpath=($(brew --prefix)/share/zsh-completions $fpath)
+    fi
 
-autoload -U compinit && compinit -u
+    if [ -e $(brew --prefix)/share/zsh/site-functions ]; then
+        fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+    fi
+
+    autoload -Uz compinit
+    compinit -u
+fi
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_]=*'
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
