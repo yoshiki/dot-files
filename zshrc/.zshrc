@@ -60,8 +60,11 @@ setopt share_history
 
 DIRSTACKSIZE=20
 
-autoload -U compinit
-compinit -u
+if [ -e /usr/local/share/zsh-completions ]; then
+    fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+
+autoload -U compinit && compinit -u
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_]=*'
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
