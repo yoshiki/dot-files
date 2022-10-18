@@ -62,10 +62,10 @@
 (line-number-mode t)
 (column-number-mode t)
 
-;; sense-region
-(autoload 'sense-region-on "sense-region"
-  "System to toggle region and rectangle." t nil)
-(sense-region-on)
+;; sense-expand-region
+;; DO "M-x package-install expand-region" and "M-x package-install multiple-cursors" to use
+(require 'sense-expand-region)
+(global-set-key (kbd "C-@") 'sense-expand-region)
 
 ;; set permission +x for #!
 (add-hook 'after-save-hook 'my-chmod-script)
@@ -202,9 +202,6 @@ If optional prefix argument LOCAL is non-nil, 'cvs update -l' is run."
 (require 'psvn)
 (global-set-key "\C-xy" 'svn-status)
 
-;; git-emacs
-(require 'git-emacs)
-
 ;; auto-insert
 (require 'autoinsert)
 (add-hook 'find-file-not-found-hooks 'auto-insert)
@@ -243,29 +240,9 @@ use warnings;
           (lambda ()
             (c-set-style "cc-mode")))
 
-;; anything
-(require 'anything)
-(require 'anything-config)
-(setq anything-sources
-      '(anything-c-source-buffers+
-        anything-c-source-recentf))
-(global-set-key "\C-xb" 'anything)
-(defun anything-c-buffer-list ()
-  "Return the list of names of buffers with boring buffers filtered out.
-Boring buffers is specified by `anything-c-boring-buffer-regexp'
-The first buffer in the list will be the last recently used
-buffer that is not the current buffer."
-  (let* ((buffers (mapcar 'buffer-name (buffer-list)))
-         (buffers (append (cdr buffers) (list (car buffers))))
-         (cur-buf-name (with-current-buffer anything-current-buffer
-                         (and (current-buffer)
-                              (buffer-name (current-buffer))))))
-    (cond
-     (cur-buf-name
-      (setq buffers (delete cur-buf-name buffers))
-      (add-to-list 'buffers cur-buf-name t)
-      buffers)
-     (t buffers))))
+;; helm
+;; DO "M-x package-install helm" to use
+(global-set-key "\C-xb" 'helm-mini)
 
 ;; iswitchb
 ;(iswitchb-mode t)
