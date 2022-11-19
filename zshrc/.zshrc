@@ -42,15 +42,8 @@ zstyle ':vcs_info:*' formats '%s(%F{green}%b%f)'
 zstyle ':vcs_info:*' actionformats '%s(%F{green}%b%f(%F{red}%a%f)'
 precmd() { vcs_info }
 
-ARCH=`uname -m`
-if [[ $ARCH == 'arm64' ]]; then
-    PROMPT='%S%m:[%.]%s%% '
-    RPROMPT='${vcs_info_msg_0_} %F{blue}[arm64]%f'
-    export PATH=/opt/homebrew/bin:$PATH
-else
-    PROMPT='%S%m:[%.]%s%% '
-    RPROMPT='${vcs_info_msg_0_} %F{blue}[x86_64]%f'
-fi
+PROMPT='%S%m:[%.]%s%% '
+RPROMPT=' %~'     # prompt for right side of screen
 
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
@@ -60,17 +53,12 @@ setopt share_history
 
 DIRSTACKSIZE=20
 
-if type brew &>/dev/null; then
-    if [ -e $(brew --prefix)/share/zsh-completions ]; then
-        fpath=($(brew --prefix)/share/zsh-completions $fpath)
-    fi
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
-    if [ -e $(brew --prefix)/share/zsh/site-functions ]; then
-        fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
-    fi
-
-    autoload -Uz compinit
-    compinit -u
+  autoload -Uz compinit
+  compinit
 fi
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_]=*'
@@ -90,6 +78,9 @@ cons25)
     zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
     ;;
 esac
+
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 if [ -f $HOME/.zshrc.local ]; then
     source $HOME/.zshrc.local
