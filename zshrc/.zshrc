@@ -53,14 +53,6 @@ setopt share_history
 
 DIRSTACKSIZE=20
 
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
-
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_]=*'
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:default' menu select=1
@@ -81,6 +73,12 @@ esac
 
 # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+if type brew &>/dev/null
+then
+  fpath=($(brew --prefix)/share/zsh/site-functions ${fpath})
+  autoload -Uz compinit && compinit -i
+fi
 
 if [ -f $HOME/.zshrc.local ]; then
     source $HOME/.zshrc.local
