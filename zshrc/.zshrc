@@ -43,7 +43,7 @@ zstyle ':vcs_info:*' actionformats '%s(%F{green}%b%f(%F{red}%a%f)'
 precmd() { vcs_info }
 
 PROMPT='%S%m:[%.]%s%% '
-RPROMPT=' %~'     # prompt for right side of screen
+RPROMPT='${vcs_info_msg_0_}'
 
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
