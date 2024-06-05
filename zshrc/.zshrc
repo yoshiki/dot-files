@@ -53,7 +53,7 @@ setopt share_history
 
 DIRSTACKSIZE=20
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} r:|[-_]=*'
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z} r:|[-_.]=**'
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:default' menu select=1
 
