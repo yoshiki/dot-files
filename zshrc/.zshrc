@@ -9,6 +9,19 @@ function dupth() {
     du -h -d $*
 }
 
+ghq-src () {
+    local repo=$(ghq list | fzf)
+    if [ -n "$repo" ]; then
+        repo=$(ghq list --full-path --exact $repo)
+        BUFFER="cd ${repo}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N ghq-src
+bindkey '^]' ghq-src
+
+
 alias screen='screen -U'
 alias rm='rm -i'
 alias cp='cp -i'
