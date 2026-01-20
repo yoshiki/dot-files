@@ -28,7 +28,23 @@ ln -sf $PWD/tmux/.tmux.conf $HOME/.tmux.conf
 
 ln -sf $PWD/vimrc/.vimrc $HOME/.vimrc
 
+if [ ! -d $HOME/.config ]; then
+    mkdir $HOME/.config
+fi
+
+if [ ! -d $HOME/.config/ghostty ]; then
+    mkdir $HOME/.config/ghostty
+fi
+
 ln -sf $PWD/ghostty/config $HOME/.config/ghostty/config
+
+if [ ! -d $HOME/.config/alacritty ]; then
+    mkdir $HOME/.config/alacritty
+fi
+
+ln -sf $PWD/alacritty/alacritty.toml $HOME/.config/alacritty
+
+echo "Please clone alacritty theme from https://github.com/alacritty/alacritty-theme"
 
 #tic $PWD/terminfo/xterm-color.ti
 
