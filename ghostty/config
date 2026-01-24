@@ -9,3 +9,7 @@ window-height=36
 window-width=108
 
 macos-option-as-alt=true
+
+cursor-style=block
+cursor-style-blink=false
+shell-integration-features=no-cursor
