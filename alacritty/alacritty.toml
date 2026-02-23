@@ -18,10 +18,10 @@ bright.black = "#999999"
 cursor = { text = "CellBackground", cursor = "CellForeground" }
 
 [font]
-normal = { family = "PlemolJP35 Console NF", style = "Regular" }
-bold = { family = "PlemolJP35 Console NF", style = "Bold" }
-italic = { family = "PlemolJP35 Console NF", style = "Regular" }
-bold_italic = { family = "PlemolJP35 Console NF", style = "Bold" }
+normal = { family = "Pending Mono NF", style = "Regular" }
+bold = { family = "Pending Mono NF", style = "Bold" }
+italic = { family = "Pending Mono NF", style = "Regular" }
+bold_italic = { family = "Pending Mono NF", style = "Bold" }
 size = 16
 
 [selection]
