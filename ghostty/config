@@ -1,7 +1,6 @@
 theme=Homebrew
 
-font-family="FiraCode Nerd Font"
-font-family="Hiragino Kaku Gothic ProN"
+font-family="PlemolJP35 Console NF"
 font-size=16
 font-feature=-dlig
 
