@@ -62,11 +62,6 @@
 (line-number-mode t)
 (column-number-mode t)
 
-;; sense-expand-region
-;; DO "M-x package-install expand-region" and "M-x package-install multiple-cursors" to use
-(require 'sense-expand-region)
-(global-set-key (kbd "C-@") 'sense-expand-region)
-
 ;; set permission +x for #!
 (add-hook 'after-save-hook 'my-chmod-script)
 (defun my-chmod-script() (interactive) (save-restriction (widen)
@@ -87,44 +82,38 @@
 (auto-compression-mode t)
 (setq garbage-collection-message t)
 
-;; auto-complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(define-key ac-complete-mode-map "\C-n" 'ac-next)
-(define-key ac-complete-mode-map "\C-p" 'ac-previous)
-
-;; cperl-mode setting
-(defalias 'perl-mode 'cperl-mode)
-(autoload 'cperl-mode "cperl-mode" "alternate mode for editing perl script." t)
-(add-to-list 'auto-mode-alist '("\\.\\([pP][Llm]\\|al\\|cgi\\|t\\)$" . cperl-mode))
-
-;; cperl-mode
+;;; cperl-mode setting
+;(defalias 'perl-mode 'cperl-mode)
+;(autoload 'cperl-mode "cperl-mode" "alternate mode for editing perl script." t)
+;(add-to-list 'auto-mode-alist '("\\.\\([pP][Llm]\\|al\\|cgi\\|t\\)$" . cperl-mode))
+;
+;;; cperl-mode
+;;(add-hook 'cperl-mode-hook
+;;          (lambda ()
+;;            (set-face-bold-p 'cperl-array-face nil)
+;;            (set-face-bold-p 'cperl-hash-face nil)
+;;            (set-face-italic-p 'cperl-hash-face nil)))
 ;(add-hook 'cperl-mode-hook
-;          (lambda ()
-;            (set-face-bold-p 'cperl-array-face nil)
-;            (set-face-bold-p 'cperl-hash-face nil)
-;            (set-face-italic-p 'cperl-hash-face nil)))
-(add-hook 'cperl-mode-hook
-          (lambda()
-            (require 'perl-completion)
-            (perl-completion-mode t)))
-;(add-hook 'cperl-mode-hook
-;          (lambda ()
-;            (when (require 'auto-complete nil t)
-;              (auto-complete-mode t)
-;              (make-variable-buffer-local 'ac-sources)
-;              (setq ac-sources
-;                    '(ac-source-perl-completion)))))
-
-(setq cperl-indent-parens-as-block t)
-(setq cperl-close-paren-offset -4)
-(setq cperl-indent-level 4)
-(setq cperl-highlight-variables-indiscriminately t)
-(setq cperl-continued-statement-offset 4)
-(setq cperl-brace-offset -4)
-(setq cperl-label-offset -4)
-;(setq cperl-comment-column 40)
-(setq-default indent-tabs-mode nil)
+;          (lambda()
+;            (require 'perl-completion)
+;            (perl-completion-mode t)))
+;;(add-hook 'cperl-mode-hook
+;;          (lambda ()
+;;            (when (require 'auto-complete nil t)
+;;              (auto-complete-mode t)
+;;              (make-variable-buffer-local 'ac-sources)
+;;              (setq ac-sources
+;;                    '(ac-source-perl-completion)))))
+;
+;(setq cperl-indent-parens-as-block t)
+;(setq cperl-close-paren-offset -4)
+;(setq cperl-indent-level 4)
+;(setq cperl-highlight-variables-indiscriminately t)
+;(setq cperl-continued-statement-offset 4)
+;(setq cperl-brace-offset -4)
+;(setq cperl-label-offset -4)
+;;(setq cperl-comment-column 40)
+;(setq-default indent-tabs-mode nil)
 
 ;; highlight
 (show-paren-mode t)
@@ -178,8 +167,8 @@
         "</html>\n"))
 
 ;; html-tt
-(require 'html-tt)
-(add-hook 'html-helper-mode-hook 'html-tt-load-hook)
+;(require 'html-tt)
+;(add-hook 'html-helper-mode-hook 'html-tt-load-hook)
 
 ;; pcl-cvs mode
 (autoload 'cvs-update "pcl-cvs"
@@ -197,10 +186,6 @@ If optional prefix argument LOCAL is non-nil, 'cvs update -l' is run."
   t)
 
 (global-set-key "\C-xe" 'cvs-examine)
-
-;; psvn
-(require 'psvn)
-(global-set-key "\C-xy" 'svn-status)
 
 ;; auto-insert
 (require 'autoinsert)
@@ -229,8 +214,8 @@ use warnings;
        auto-insert-alist))
 
 ;; yaml-mode
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.\\(yml\\|yaml\\)$" . yaml-mode))
+;(require 'yaml-mode)
+;(add-to-list 'auto-mode-alist '("\\.\\(yml\\|yaml\\)$" . yaml-mode))
 
 ;; show last new line
 ;(when (boundp 'show-trailing-whitespace) (setq-default show-trailing-whitespace t))
