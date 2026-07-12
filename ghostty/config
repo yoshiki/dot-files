@@ -1,5 +1,6 @@
 theme=Homebrew
 
+# https://github.com/yuru7/pending-mono
 font-family="Pending Mono NF"
 font-size=16
 font-feature=-dlig
