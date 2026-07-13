@@ -3,8 +3,7 @@ dotfiles.root = "~/.dotfiles"
 dotfiles.default_mode = "symlink"
 
 [dotfiles]
-"~/.zshrc" = { source = "~/.dotfiles/zsh/.zshrc", mode = "copy" }
-"~/.zshrc/source_global" = { block = "source $HOME/.dotfiles/zsh/.zshrc.global" }
+"~/.zshrc/source_common" = { line = "source $HOME/.dotfiles/zsh/.zshrc.common" }
 "~/.termcap" = { source = "~/.dotfiles/termcap/.termcap" }
 "~/.emacs" = { source = "~/.dotfiles/emacs/.emacs" }
 "~/.emacs.d" = { source = "~/.dotfiles/emacs/.emacs.d" }
