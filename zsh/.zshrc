@@ -1,3 +1,1 @@
-# >>> mise:source_global >>>
-DUMMY
-# <<< mise:source_global <<<
+source $HOME/.dotfiles/zsh/.zshrc.common
