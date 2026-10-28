@@ -87,6 +87,9 @@ esac
 # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# mise
+eval "$(mise activate zsh)"
+
 if type brew &>/dev/null
 then
   fpath=($(brew --prefix)/share/zsh/site-functions ${fpath})

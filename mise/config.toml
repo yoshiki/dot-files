@@ -10,4 +10,6 @@ dotfiles.default_mode = "symlink"
 "~/.tmux.conf" = { source = "~/.dotfiles/tmux/.tmux.conf" }
 "~/.vimrc" = { source = "~/.dotfiles/vim/.vimrc" }
 "~/.config/ghostty/config" = { source = "~/.dotfiles/ghostty/config" }
+"~/.config/starship/starship.toml" = { source = "~/.dotfiles/starship/starship.toml" }
+"~/.config/herdr/config.toml" = { source = "~/.dotfiles/herdr/config.toml" }
 

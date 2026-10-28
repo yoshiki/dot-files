@@ -1,0 +1,17 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[keys]
+prefix = "ctrl+t"
+next_workspace = "prefix+ctrl+n"
+previous_workspace = "prefix+ctrl+p"
+
+[ui.sound]
+enabled = false
+
+[experimental]
+pane_history = false
+switch_ascii_input_source_in_prefix = true
